@@ -1,0 +1,326 @@
+\documentclass[10pt,spanish,aspectratio=1610]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage[spanish]{babel}
+\spanishdecimal{.}
+\usepackage{subfig}
+\usepackage{fancyhdr}
+\usepackage{pstricks}
+\usepackage{color}
+\usepackage[ruled]{algorithm2e}
+%\usefonttheme{professionalfonts} % using non standard fonts for beamer
+%\usefonttheme{serif} % default family is serif
+%\usepackage{fontspec}
+%\setmainfont{Liberation Serif}
+
+\DeclareMathOperator{\atantwo}{atan2}
+\setbeamercolor{block title}{fg=white,bg=blue!70!black}
+\setbeamercolor{block body}{fg=black, bg=blue!10!white}
+\setbeamertemplate{blocks}[rounded][shadow=false]
+\setbeamercovered{transparent}
+\beamertemplatenavigationsymbolsempty
+\setbeamertemplate{frametitle}{
+  \leavevmode
+  \hbox{\begin{beamercolorbox}[wd=0.6\paperwidth,left]{frametitle}
+    \usebeamerfont{frametitle}\insertframetitle
+  \end{beamercolorbox}
+  \begin{beamercolorbox}[wd=0.4\paperwidth,center]{frametitle}
+    \usebeamerfont{frametitle}\hfill\small{\insertsection}
+  \end{beamercolorbox}  } }
+\setbeamertemplate{footline}{
+  \leavevmode%
+  \hbox{%
+    \begin{beamercolorbox}[colsep=-0.5pt,wd=.33\paperwidth,ht=3ex,dp=1.5ex,center]{author in head/foot}%
+      \usebeamerfont{author in head/foot}\insertshortauthor~~ (\insertshortinstitute)
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[colsep=-0.5pt,wd=.34\paperwidth,ht=3ex,dp=1.5ex,center]{date in head/foot}%
+      \usebeamerfont{author in head/foot}\insertshorttitle
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[colsep=-0.5pt,wd=.33\paperwidth,ht=3ex,dp=1.5ex,right]{author in head/foot}%
+      \usebeamerfont{author in head/foot}\insertshortdate{}\hspace*{2em}\scriptsize{\insertframenumber{}}\hspace*{1ex}
+    \end{beamercolorbox}
+  }
+}
+
+\begin{document}
+\renewcommand{\tablename}{Tabla}
+\renewcommand{\figurename}{Figura}
+\title[IA en los Robots de Servicio]{Robots de Servicio: IA para mejorar la calidad de vida}
+\author[Marco Negrete]{Marco Negrete}
+\institute[FI, UNAM]{Facultad de Ingeniería, UNAM}
+\date[CNIME - 2023]{5to Congreso Nacional de Ingeniería Mecánica Eléctrica\\Universidad Juárez Autónoma de Tabasco\\Agosto de 2023}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\begin{frame}\frametitle{¿Qué es un robot?}
+  Debido a que es un campo reciente y con un gran crecimiento, es difícil dar una definición. Sin embargo un robot debe poder:
+  \begin{columns}
+    \begin{column}{0.75\textwidth}
+      \includegraphics[width=\textwidth]{Figures/Robots.png}
+    \end{column}
+    \begin{column}{0.25\textwidth}
+      \begin{itemize}
+      \item Sensar
+      \item Planear
+      \item Actuar
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}\frametitle{Industriales vs Robots de Servicio}
+  \centering
+  \begin{tabular}{cc}
+    \textbf{Robots Industriales} & \textbf{Robots de Servicio}\\
+    Robots para manufactura &  Robots que realizan tareas útiles para humanos o\\
+     & equipo, excluyendo la automatización industrial\\
+    \includegraphics[width=0.3\textwidth]{Figures/IndustrialRobot.jpg} & \includegraphics[width=0.55\textwidth]{Figures/ServiceRobots.png}
+  \end{tabular}
+\end{frame}
+
+\begin{frame}\frametitle{Autónomos vs Teleoperados}
+  \centering
+  \textbf{Teleoperados} $\qquad\leftarrow \cdots\qquad$ \textbf{Parcialmente Autónomos}  $\qquad\cdots\rightarrow\qquad$ \textbf{Autónomos}\\
+  \includegraphics[width=0.15\textwidth]{Figures/TelepresenceRobot.png}
+  \includegraphics[width=0.25\textwidth]{Figures/UltraSoundRobot.png}
+  \includegraphics[width=0.35\textwidth]{Figures/RescueRobot.png}
+  \includegraphics[width=0.2\textwidth]{Figures/Justina.png}
+\end{frame}
+  
+\begin{frame}\frametitle{Robótica e Inteligencia Artificial}
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.85\textwidth]{Figures/RoboticsVsAI.pdf}
+    \end{figure}
+\end{frame}
+
+\begin{frame}\frametitle{Robots de servicio doméstico}
+  \centering
+  Son robots móviles autónomos pensados para asistir a humanos en tareas comunes del hogar u oficina.\\
+  \includegraphics[width=0.22\textwidth]{Figures/GolemIII.png}
+  \includegraphics[width=0.3\textwidth]{Figures/HSR.jpg}
+  \includegraphics[width=0.18\textwidth]{Figures/Justina.png}
+\end{frame}
+
+\begin{frame}\frametitle{Posibles aplicaciones}
+  \begin{columns}
+    \begin{column}{0.7\textwidth}
+      \includegraphics[width=0.45\textwidth]{Figures/Applications1.jpg}
+      \includegraphics[width=0.45\textwidth]{Figures/Applications2.png}
+      \includegraphics[width=0.3\textwidth]{Figures/Applications3.jpg}
+      \includegraphics[width=0.5\textwidth]{Figures/Applications4.jpg}
+    \end{column}
+    \begin{column}{0.3\textwidth}
+      \begin{itemize}
+        \item Ayuda a personas con\\ movilidad limitada
+        \item Asistencia a personas\\ mayores
+        \item Limpieza
+        \item Cuidado de pacientes
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}\frametitle{¿Qué debe poder hacer?}
+  \centering
+  \includegraphics[width=0.73\textwidth]{Figures/Subsystems.pdf}
+\end{frame}
+
+\begin{frame}\frametitle{Justina: un robot de servicio doméstico}
+  \begin{columns}
+    \begin{column}{0.4\textwidth}
+      \includegraphics[width=\textwidth]{Figures/JustinaHardware.pdf}
+    \end{column}
+    \begin{column}{0.6\textwidth}
+      \centering
+      \includegraphics[width=0.6\textwidth]{Figures/JustInTimeDebug.png}
+      \begin{itemize}
+      \item Desarrollado en el Laboratorio de Biorrobótica de la FI, UNAM
+      \item Participación en varios concursos nacionales e internacionales como el TMR, Robocup y RockIn
+        \item Segundo lugar en las ediciones de la Robocup 2018 y 2019 
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}\frametitle{Visión computacional}
+  \begin{itemize}
+  \item \textbf{Visión Humana: } Se puede concebir como una tarea de procesamiento de información, que obtiene significado a partir de los estímulos percibidos por los ojos.
+  \item \textbf{Visión Computacional: } Desarrollo de programas de computadora que puedan \textit{interpretar} imágenes. Es decir, tratar de lograr la visión humana por medios computacionales.
+  \end{itemize}
+  La visión computacional (parte de la percepción de máquina) se considera en sí un área de la inteligencia artificial.
+\end{frame}
+
+\begin{frame}\frametitle{Visión computacional}
+  \centering
+  \includegraphics[width=0.4\textwidth]{Figures/Vision1.png}
+  \includegraphics[width=0.4\textwidth]{Figures/Vision2.png}\\
+  \includegraphics[width=0.4\textwidth]{Figures/Vision3.jpg}\\
+  Técnicas de IA usadas:
+  \begin{itemize}
+  \item Clasificadores basados en vectores de características
+  \item Agrupamiento (aprendizaje no supervisado)
+  \item Redes neuronales artificiales
+  \end{itemize}
+\end{frame}
+
+\begin{frame}\frametitle{Navegación autónoma}
+  \centering
+  \includegraphics[width=0.3\textwidth]{Figures/VQ1.png}
+  \includegraphics[width=0.3\textwidth]{Figures/VQ2.png}\\
+  \includegraphics[width=0.3\textwidth]{Figures/VQ3.png}
+  \includegraphics[width=0.3\textwidth]{Figures/VisibilityGraph.png}\\
+  Técnicas de IA usadas:
+  \begin{itemize}
+  \item Agrupamiento (aprendizaje no supervisado) para construcción de mapas
+  \item Búsqueda en grafos (problem solving) para planeación de rutas
+  \end{itemize}
+\end{frame}
+
+\begin{frame}\frametitle{Navegación autónoma}
+  \centering
+  \includegraphics[width=0.50\textwidth]{Figures/PotFields1.png}
+  \includegraphics[width=0.25\textwidth]{Figures/PotFields2.png}\\
+  Técnicas de IA usadas:
+  \begin{itemize}
+  \item Algoritmos genéticos para sintonizar constantes en campos potenciales artificiales para evasión de obstáculos. 
+  \end{itemize}
+\end{frame}
+
+\begin{frame}\frametitle{Navegación autónoma}
+  \centering
+  \includegraphics[width=0.3\textwidth]{Figures/VQ1.png}
+  \includegraphics[width=0.3\textwidth]{Figures/VQ2.png}\\
+  \includegraphics[width=0.3\textwidth]{Figures/VQ3.png}
+  \includegraphics[width=0.3\textwidth]{Figures/VisibilityGraph.png}\\
+  Técnicas de IA usadas:
+  \begin{itemize}
+  \item Agrupamiento (aprendizaje no supervisado) para construir un mapa
+  \item Búsqueda en grafos (problem solving) para planeación de rutas
+  \end{itemize}
+\end{frame}
+
+\begin{frame}\frametitle{Navegación autónoma}
+  \centering
+  \includegraphics[width=0.6\textwidth]{Figures/LocalizationHMM.png}\\
+  Técnicas de IA usadas:
+  \begin{itemize}
+  \item Localización mediante Modelos Ocultos de Markov (modelos probabilísticos para manejo de incertidumbre)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}\frametitle{Planeación}
+  \centering
+  \begin{columns}
+    \begin{column}{0.25\textwidth}
+      \includegraphics[width=\textwidth]{Figures/Planning1.jpg}\\
+    \end{column}
+    \begin{column}{0.35\textwidth}
+      \includegraphics[scale=0.7]{Figures/PlanningCD3.jpg}\\
+      \includegraphics[scale=0.7]{Figures/PlanningCD4.jpg}
+    \end{column}
+    \begin{column}{0.40\textwidth}
+      \includegraphics[scale=0.7]{Figures/PlanningCD7.jpg}\\
+      \includegraphics[scale=0.7]{Figures/PlanningCD8.jpg}\\
+    \end{column}
+  \end{columns}
+  \[\]
+  Técnicas de IA usadas:
+  \begin{itemize}
+  \item Sistemas basados en reglas implementados con el lenguaje lógico CLIPS 
+  \item Razonamiento 
+  \end{itemize}
+\end{frame}
+
+\begin{frame}\frametitle{Planeación}
+  \centering
+  ``Robot go to the kitchen''\\
+  ``Robot grasp the cucumber from the kitchen''\\
+  ``Robot give the apple to John''
+  \[\]
+  \includegraphics[scale=0.7]{Figures/PlanningCD1.jpg}\\
+  \includegraphics[scale=0.7]{Figures/PlanningCD2.jpg}\\
+  \includegraphics[scale=0.7]{Figures/PlanningCD6.jpg}\\
+  Técnicas de IA usadas:
+  \begin{itemize}
+  \item Dependencia conceptual para procesamiento de lenguaje natural 
+  \end{itemize}
+\end{frame}
+
+\begin{frame}\frametitle{HRI - Reconocimiento de Voz}
+  \centering
+    \begin{columns}
+    \begin{column}{0.65\textwidth}
+      \includegraphics[width=\textwidth]{Figures/SpeechRecogVQ.png}
+      \includegraphics[width=\textwidth]{Figures/SpeechRecogHMM.png}
+    \end{column}
+    \begin{column}{0.35\textwidth}
+      Técnicas de IA usadas:
+      \begin{itemize}
+      \item Agrupamiento (aprendizaje no supervisado) para extracción de características de la señal de audio
+      \item Modelos Ocultos de Markov para determinar la frase más probable
+      \end{itemize}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}\frametitle{HRI - Reconocimiento de Voz}
+  \centering
+  \includegraphics[width=0.7\textwidth]{Figures/SpeechRecogANN.png}\\
+  \[\]
+  Técnicas de IA usadas:
+  \begin{itemize}
+    \item Redes neuronales artificiales para reconocimiento de palabras clave
+  \end{itemize}
+\end{frame}
+
+\begin{frame}\frametitle{HRI - Interfaz Cerebro Computadora}
+  Una interfaz cerebro-computadora o BCI (por sus siglas en inglés) es un sistema que permite a la actividad encefálica (EEG) controlar computadoras o dispositivos externos sin la necesidad de usar nervios o músculos periféricos.\\
+  \centering
+  \includegraphics[width=0.35\textwidth]{Figures/BTTFHelmet.jpg}
+  \includegraphics[width=0.6\textwidth]{Figures/BCI1.png}
+  \begin{itemize}
+  \item Puede ayudar a personas con problemas neuromusculares
+  \item Puede facilitar la experiencia de usuario en el uso de dispositivos de entretenimiento, electrodomésticos, etc. 
+  \end{itemize}
+\end{frame}
+
+\begin{frame}\frametitle{HRI - Interfaz Cerebro Computadora}
+  La onda P300 es un potencial relacionado a eventos que se presenta cuando la persona percibe un estímulo al cual está atento.\\ 
+  \centering
+  \includegraphics[width=0.3\textwidth]{Figures/Emotiv.png}
+  \includegraphics[width=0.25\textwidth]{Figures/BCI2.png}
+  \includegraphics[width=0.75\textwidth]{Figures/P300.jpg}\\
+  Técnicas de IA usadas:
+  \begin{itemize}
+  \item Máquina de vector soporte (aprendizaje supervisado) para determinar si en una señal EEG está presente o no la onda P300
+  \end{itemize}
+\end{frame}
+
+\begin{frame}\frametitle{Conclusión}
+  \centering
+  \includegraphics[width=0.8\textwidth]{Figures/RoboticsAndAI.pdf}
+\end{frame}
+
+\begin{frame}
+  \Huge{Gracias}
+  \[\]
+  \Large{Contacto}
+  \[\]
+  \large
+  Dr. Marco Negrete\\
+  Profesor Asociado C\\
+  Departamento de Procesamiento de Señales\\
+  Facultad de Ingeniería, UNAM.
+\[\]
+mnegretev.info\\
+marco.negrete@ingenieria.unam.edu\\
+\end{frame}
+
+\bibliographystyle{abbrv}
+\bibliography{References}
+\end{document}
